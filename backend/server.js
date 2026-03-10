@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const projectRoutes = require('./routes/projects');
+const certificationRoutes = require('./routes/certifications'); 
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running!' });
 });
 
-app.use('/api/projects', projectRoutes);
+app.use('/api/certifications', certificationRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -30,4 +30,5 @@ mongoose
   })
   .catch((err) => {
     console.error('MongoDB connection failed:', err.message);
+    process.exit(1); 
   });

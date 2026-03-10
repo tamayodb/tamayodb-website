@@ -1,0 +1,147 @@
+.experience-section {
+  background: #000000;
+  padding: 100px 6%;
+  color: #ffffff;
+}
+
+.experience-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.experience-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: -0.02em;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.experience-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+.experience-card:hover {
+  background: #212121;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.experience-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.experience-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.experience-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experience-info {
+  flex: 1;
+}
+
+.experience-job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.experience-company {
+  font-size: 0.95rem;
+  color: #4a9eff;
+  margin: 0;
+  font-weight: 500;
+}
+
+.experience-period {
+  background: rgba(74, 158, 255, 0.15);
+  color: #4a9eff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.experience-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .experience-section {
+    padding: 60px 6%;
+  }
+
+  .experience-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+
+  .experience-card {
+    padding: 24px;
+  }
+
+  .experience-header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .experience-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .experience-period {
+    justify-self: start;
+  }
+
+  .experience-job-title {
+    font-size: 1.1rem;
+  }
+
+  .experience-company {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-title {
+    font-size: 2rem;
+  }
+
+  .experience-card {
+    padding: 20px;
+  }
+
+  .experience-description {
+    font-size: 0.95rem;
+  }
+}

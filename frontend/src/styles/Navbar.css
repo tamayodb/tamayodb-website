@@ -1,0 +1,103 @@
+.navbar {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1000;
+  font-family: "Inter", sans-serif;
+}
+
+.navbar-container {
+  max-width: 100%;
+  margin: auto;
+  padding: 18px 6%; /* ✅ Changed from 20px to 6% to match hero layout */
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.logo img {
+  height: 45px;
+  width: auto;
+  display: block;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center; /* ✅ Center the nav links */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #111;
+  font-size: 18px;
+  font-weight: 800;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.6;
+}
+
+.resume-btn {
+  background: black;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.15s ease;
+  margin-left: auto; /* ✅ Ensure it's pushed to the right */
+}
+
+.resume-btn:hover {
+  transform: translateY(-1px);
+}
+
+.resume-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    flex-direction: column;
+    background: white;
+    width: 220px;
+    padding: 20px;
+    border: 1px solid #eee;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .resume-btn {
+    display: none; /* ✅ Changed from .resume-container to .resume-btn */
+  }
+}
