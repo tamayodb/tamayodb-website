@@ -5,8 +5,8 @@
   --color-text-muted: #666666;
   --color-bg: #ffffff;
   --color-border: #e5e5e5;
-  --color-accent: #ff4757;
-  --color-accent-gradient: linear-gradient(180deg, #ff4757, #ff6348);
+  --color-accent: #4a9eff;
+  --color-accent-gradient: linear-gradient(180deg, #4a9eff, #93c3fa);
   --transition: all 0.3s ease;
 }
 
@@ -341,5 +341,365 @@ body {
   .social-icon {
     width: 44px;
     height: 44px;
+  }
+}
+
+/* ── Button Shell ─────────────────────────── */
+.car-nav-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 64px;
+  height: 64px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: visible;
+}
+
+.car-nav-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--color-accent);
+}
+
+.car-nav-button:hover .car-svg {
+  color: var(--color-accent);
+}
+
+.car-nav-button.open {
+  transform: scale(0.92);
+  border-color: var(--color-accent);
+}
+
+.car-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-svg {
+  width: 100%;
+  height: 100%;
+  color: #000000;
+  overflow: visible;
+  transition: color 0.3s ease;
+}
+
+/* ── Suspension Bounce ────────────────────── */
+.car-body-group {
+  animation: suspension 1.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+@keyframes suspension {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-2px); }
+  50%       { transform: translateY(0.5px); }
+  75%       { transform: translateY(-1px); }
+}
+
+.car-shadow {
+  animation: shadowPulse 1.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { transform: scaleX(1);    opacity: 0.12; }
+  25%       { transform: scaleX(0.94); opacity: 0.08; }
+  50%       { transform: scaleX(1.03); opacity: 0.15; }
+  75%       { transform: scaleX(0.97); opacity: 0.10; }
+}
+
+/* ── Wheel Spin ───────────────────────────── */
+.wheel {
+  animation: wheelSpin 1.6s linear infinite;
+  transform-box: fill-box;      
+  transform-origin: center;    
+}
+
+.car-nav-button:hover .wheel {
+  animation-duration: 0.6s;
+}
+
+.car-nav-button.open .wheel {
+  animation: none;
+}
+
+@keyframes wheelSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Headlight Glow ───────────────────────── */
+.headlight {
+  animation: headlightPulse 2s ease-in-out infinite;
+}
+
+.headlight-glow {
+  animation: headlightPulse 2s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+@keyframes headlightPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+/* ── Taillight ────────────────────────────── */
+.taillight {
+  animation: taillightBlink 2.4s ease-in-out infinite;
+}
+
+@keyframes taillightBlink {
+  0%, 100% { opacity: 1; }
+  60%       { opacity: 0.5; }
+}
+
+/* ── Exhaust Smoke ────────────────────────── */
+.smoke {
+  animation: smokeDrift 2s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
+.smoke-1 { animation-delay: 0s; }
+.smoke-2 { animation-delay: 0.35s; }
+.smoke-3 { animation-delay: 0.7s; }
+
+@keyframes smokeDrift {
+  0%   { transform: translate(0, 0)     scale(1);   opacity: 0.25; }
+  100% { transform: translate(-8px, -4px) scale(1.6); opacity: 0;    }
+}
+
+/* ── Open state — freeze everything ──────── */
+.car-nav-button.open .car-body-group,
+.car-nav-button.open .car-shadow,
+.car-nav-button.open .smoke {
+  animation: none;
+}
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 768px) {
+  .car-nav-button { bottom: 20px; right: 20px; width: 58px; height: 58px; }
+  .car-icon-wrapper { width: 42px; height: 42px; }
+}
+
+
+/* Vertical Navigation Bar */
+.vertical-nav {
+  position: fixed;
+  width: 64px;
+  right: -300px;  
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 40px;
+  padding: 20px 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.vertical-nav.open {
+  right: 30px;
+}
+
+.nav-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* Center the close button */
+  margin-bottom: 10px;
+}
+
+.close-nav {
+  background: transparent;  /* Changed from rgba to transparent */
+  border: none;
+  border-radius: 12px;  /* Changed from 50% to 12px to match nav-item */
+  width: 48px;  /* Changed from 32px to 48px to match nav-item */
+  height: 48px;  /* Changed from 32px to 48px to match nav-item */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.2s;
+  position: relative;  /* Added for label positioning */
+}
+
+.close-nav:hover {
+  background: rgba(0, 0, 0, 0.1);  /* Match nav-item hover */
+  transform: scale(1.05);  /* Changed from rotate to scale to match nav-item */
+}
+
+.close-nav:active {
+  transform: scale(0.95);  /* Match nav-item active */
+}
+
+/* Add label for close button */
+.close-nav .nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateX(10px);  
+  transition: all 0.3s;
+  position: absolute;
+  right: 100%;  
+  margin-right: 15px;  
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.close-nav:hover .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  flex: 1;
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateX(10px);  
+  transition: all 0.3s;
+  position: absolute;
+  right: 100%;  
+  margin-right: 15px;  
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.nav-item:hover .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-action-btn {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.nav-action-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vertical-nav {
+    width: 70px;
+    padding: 15px 8px;
+  }
+  
+  .vertical-nav.open {
+    left: 10px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .vertical-nav {
+    background: rgba(30, 30, 30, 0.95);
+  }
+  
+  .close-nav,
+  .nav-item {
+    color: #fff;
+  }
+  
+  .nav-action-btn {
+    color: #fff;
+  }
+  
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 }

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const certificationRoutes = require('./routes/certifications'); 
+const achievementRoutes = require('./routes/achievements');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/certifications', certificationRoutes);
+app.use('/api/achievements', achievementRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;

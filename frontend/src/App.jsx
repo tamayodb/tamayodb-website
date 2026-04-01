@@ -5,6 +5,9 @@ import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 
+import { Command, Grid } from "lucide-react";
+import { Home, User, Folder, MessageCircle, Globe, X } from "lucide-react";
+
 import linkedinIcon from '/linkedin1.png'
 import githubIcon from '/github1.png'
 import gmailIcon from '/gmail1.png'
@@ -16,6 +19,7 @@ import Education from './components/Education'
 import Projects from './components/Projects'
 import Skills from './components/Skills'  
 import Certifications from './components/Certifications'
+import Achievements from './components/Achievements'
 import ScrollProgress from "./components/ScrollProgress"
 
 import './styles/App.css'
@@ -165,12 +169,182 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 }
 
 export default function App() {
+  
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setIsNavOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const navItems = [
+    { id: "hero", label: "HOME", icon: Home },
+    { id: "experience", label: "EXPERIENCE", icon: User },
+    { id: "projects", label: "PROJECTS", icon: Folder },
+    { id: "skills", label: "SKILLS", icon: MessageCircle },
+    { id: "certifications", label: "CERTIFICATIONS", icon: Grid },
+    { id: "achievements", label: "ACHIEVEMENTS", icon: Globe },
+    { id: "leadership", label: "LEADERSHIP", icon: Command },
+  ];
+
+  const handleNavClick = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setIsNavOpen(false);
+  };
+ 
+
   return (
     <div className="app-container">
       <ScrollProgress />
       <Navbar />
 
-      <main className="hero-layout">
+      <button
+        className={`car-nav-button ${isNavOpen ? "open" : ""}`}
+        onClick={() => setIsNavOpen(!isNavOpen)}
+        aria-label="Toggle navigation"
+      >
+        <div className="car-icon-wrapper">
+          <svg
+            className="car-svg"
+            viewBox="0 0 80 56"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Ground shadow */}
+            <ellipse cx="40" cy="53" rx="26" ry="2.5" fill="rgba(0,0,0,0.12)" className="car-shadow" />
+
+            {/* Car body group — bounces together */}
+            <g className="car-body-group">
+              {/* Main chassis */}
+              <rect x="6" y="28" width="66" height="16" rx="4" fill="currentColor" opacity="0.08" stroke="currentColor" strokeWidth="2" />
+
+              {/* Cabin */}
+              <path
+                d="M18 28 C20 18, 26 14, 32 14 L50 14 C56 14, 60 18, 62 28 Z"
+                fill="currentColor"
+                opacity="0.06"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+
+              {/* Window */}
+              <path
+                d="M22 27 C23 20, 27 17, 32 17 L50 17 C54 17, 57 20, 58 27 Z"
+                fill="currentColor"
+                opacity="0.12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+
+              {/* Window divider */}
+              <line x1="40" y1="17" x2="40" y2="27" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+
+              {/* Door line */}
+              <line x1="40" y1="28" x2="40" y2="44" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+
+              {/* Door handle left */}
+              <rect x="26" y="35" width="8" height="2.5" rx="1.25" fill="currentColor" opacity="0.4" />
+
+              {/* Door handle right */}
+              <rect x="46" y="35" width="8" height="2.5" rx="1.25" fill="currentColor" opacity="0.4" />
+
+              {/* Headlight */}
+              <ellipse cx="70" cy="34" rx="3" ry="2.5" className="headlight" fill="#fbbf24" />
+              <ellipse cx="70" cy="34" rx="5" ry="4" className="headlight-glow" fill="#fbbf24" opacity="0.2" />
+
+              {/* Taillight */}
+              <rect x="6" y="32" width="3" height="6" rx="1.5" className="taillight" fill="#ef4444" />
+            </g>
+
+            {/* Exhaust smoke */}
+            <g className="exhaust-group">
+              <circle cx="7" cy="43" r="2" className="smoke smoke-1" fill="currentColor" opacity="0.25" />
+              <circle cx="3.5" cy="41" r="1.5" className="smoke smoke-2" fill="currentColor" opacity="0.18" />
+              <circle cx="1" cy="39.5" r="1" className="smoke smoke-3" fill="currentColor" opacity="0.12" />
+            </g>
+
+          {/* Left wheel */}
+          <g className="wheel-left">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 22 46"
+              to="360 22 46"
+              dur="1.6s"
+              repeatCount="indefinite"
+            />
+            <circle cx="22" cy="46" r="8" stroke="currentColor" strokeWidth="2.2" fill="currentColor" fillOpacity="0.06" />
+            <circle cx="22" cy="46" r="3" fill="currentColor" opacity="0.7" />
+            <line x1="22" y1="39" x2="22" y2="53" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+            <line x1="15" y1="46" x2="29" y2="46" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+          </g>
+
+          {/* Right wheel */}
+          <g className="wheel-right">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 58 46"
+              to="360 58 46"
+              dur="1.6s"
+              repeatCount="indefinite"
+            />
+            <circle cx="58" cy="46" r="8" stroke="currentColor" strokeWidth="2.2" fill="currentColor" fillOpacity="0.06" />
+            <circle cx="58" cy="46" r="3" fill="currentColor" opacity="0.7" />
+            <line x1="58" y1="39" x2="58" y2="53" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+            <line x1="51" y1="46" x2="65" y2="46" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+          </g>
+          </svg>
+        </div>
+      </button>
+
+            {/* Vertical Navigation Bar */}
+      <div className={`vertical-nav ${isNavOpen ? 'open' : ''}`}>
+        <div className="nav-header">
+          <button 
+            className="close-nav" 
+            onClick={() => setIsNavOpen(false)}
+            aria-label="Close navigation"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        <nav className="nav-items">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                className="nav-item"
+                onClick={() => handleNavClick(item.id)}
+                aria-label={item.label}
+              >
+                <Icon size={24} />
+                <span className="nav-label">{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+
+      {/* Overlay */}
+      {isNavOpen && (
+        <div 
+          className="nav-overlay" 
+          onClick={() => setIsNavOpen(false)}
+        />
+      )}
+
+      <main className="hero-layout" id="hero">
         {/* Left Side - Text Content */}
         <div className="hero-left">
           <h1 className="greeting">
@@ -247,7 +421,8 @@ export default function App() {
       <Projects />
       <Skills />
       <Certifications />
-
+      <Achievements />
+      
       <Footer />
     </div>
   )

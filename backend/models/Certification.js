@@ -6,7 +6,10 @@ const CertificationSchema = new mongoose.Schema({
   provider: { type: String, required: true },
   url: { type: String, default: '' },
   order: { type: Number, default: 0 },
-}, { timestamps: true });
+}, { 
+  timestamps: true,
+  collection: 'certifications' 
+});
 
 module.exports = mongoose.models.Certification || 
   mongoose.model('Certification', CertificationSchema);
