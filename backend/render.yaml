@@ -2,7 +2,7 @@ services:
   - type: web
     name: tamayodb-api
     env: node
-    rootDir: backend
+    rootDir: tamayodb-website/backend
     buildCommand: npm install
     startCommand: node server.js
     envVars:
