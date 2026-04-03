@@ -12,15 +12,21 @@ const app = express();
 
 app.use(cors({
   origin: function(origin, callback) {
-    const allowed = [
-      'http://localhost:5173',                              // Vite dev
-      'http://localhost:3000',                              // CRA dev
-      'https://tamayodb-website-frontend-o7lfhu0o7.vercel.app', 
-      process.env.FRONTEND_URL                            
-    ].filter(Boolean);
+
+    const localhost = ['http://localhost:5173', 'http://localhost:3000'];
+
+    const isVercel = origin && (
+      origin.endsWith('.vercel.app') || 
+      origin.includes('vercel.app')
+    );
     
-  
-    if (!origin || allowed.includes(origin)) {
+   
+    const allowed = [
+      'https://tamayodb-website-frontend.vercel.app', 
+      process.env.FRONTEND_URL 
+    ].filter(Boolean);
+   
+    if (!origin || localhost.includes(origin) || isVercel || allowed.includes(origin)) {
       callback(null, true);
     } else {
       console.warn('CORS blocked origin:', origin);
