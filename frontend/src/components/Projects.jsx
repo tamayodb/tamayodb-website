@@ -74,12 +74,11 @@ function Projects() {
   );
 }
 
-// Separate component for each project card
 function ProjectCard({ project, index }) {
   const [embedLoaded, setEmbedLoaded] = useState(false);
   const [embedError, setEmbedError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const isReversed = index % 2 === 0; // Check if card is reversed
+  const isReversed = index % 2 === 0; 
 
   return (
     <div 
@@ -97,7 +96,7 @@ function ProjectCard({ project, index }) {
             </div>
           )}
 
-          {/* Live Embed */}
+    
           {project.embedUrl && !embedError && (
             <iframe
               src={project.embedUrl.trim()}
@@ -113,12 +112,11 @@ function ProjectCard({ project, index }) {
             />
           )}
 
-          {/* Fallback Image */}
           {(!project.embedUrl || embedError) && (
             <img src={project.image} alt={project.title} />
           )}
 
-          {/* Error Message Overlay */}
+  
           {embedError && (
             <div className="error-message">
               <p>Preview unavailable</p>
@@ -135,7 +133,6 @@ function ProjectCard({ project, index }) {
           )}
         </div>
 
-        {/* Overlay Links */}
         <div className={`project-overlay ${isHovered ? 'visible' : ''}`}>
           <div className="project-links">
             <a 

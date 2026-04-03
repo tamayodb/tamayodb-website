@@ -20,6 +20,8 @@ import Projects from './components/Projects'
 import Skills from './components/Skills'  
 import Certifications from './components/Certifications'
 import Achievements from './components/Achievements'
+import Leadership from './components/Leadership'
+import Contact from './components/Contact'    
 import ScrollProgress from "./components/ScrollProgress"
 
 import './styles/App.css'
@@ -422,7 +424,8 @@ export default function App() {
       <Skills />
       <Certifications />
       <Achievements />
-      
+      <Leadership />
+      <Contact />
       <Footer />
     </div>
   )

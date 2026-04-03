@@ -2,7 +2,6 @@
   background: #111;
   color: white;
   padding: 40px 20px;
-  margin-top: 80px;
 }
 
 .footer-container {
@@ -14,16 +13,8 @@
   align-items: center;
 }
 
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  color: white;
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
+.logo img {
+  height: 45px;
+  width: auto;
+  display: block;
 }

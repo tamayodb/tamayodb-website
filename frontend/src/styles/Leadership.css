@@ -1,0 +1,245 @@
+.leadership-section {
+  background: #000000;
+  padding: 100px 6%;
+  color: #ffffff;
+}
+
+.leadership-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.leadership-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.leadership-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.leadership-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.leadership-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.leadership-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.lead-role {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.lead-date {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lead-org {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: #4a9eff;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+   margin-top: 2px;   
+  margin-bottom: 10px;  
+}
+
+.lead-org:hover {
+  color: #6bb8ff;
+  text-decoration: underline;
+}
+
+.lead-responsibilities {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lead-responsibility {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.2;
+  padding-left: 16px;
+  position: relative;
+}
+
+.lead-responsibility::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #4a9eff;
+  font-weight: 600;
+}
+
+.lead-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.3s ease;
+  color: #4a9eff;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.lead-org:hover .lead-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.leadership-item:hover {
+  border-bottom-color: rgba(74, 158, 255, 0.2);
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 0;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #4a9eff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.retry-btn {
+  padding: 10px 24px;
+  background: #4a9eff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-btn:hover {
+  background: #3f77ff;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leadership-item {
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.leadership-item:nth-child(1) { animation-delay: 0.05s; }
+.leadership-item:nth-child(2) { animation-delay: 0.1s; }
+.leadership-item:nth-child(3) { animation-delay: 0.15s; }
+.leadership-item:nth-child(4) { animation-delay: 0.2s; }
+.leadership-item:nth-child(5) { animation-delay: 0.25s; }
+.leadership-item:nth-child(6) { animation-delay: 0.3s; }
+.leadership-item:nth-child(7) { animation-delay: 0.35s; }
+.leadership-item:nth-child(8) { animation-delay: 0.4s; }
+
+@media (max-width: 768px) {
+  .leadership-section {
+    padding: 80px 6%;
+  }
+
+  .leadership-title {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+  }
+
+  .leadership-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lead-role {
+    font-size: 1rem;
+  }
+
+  .lead-date {
+    font-size: 0.85rem;
+    color: #4a9eff;
+  }
+
+  .leadership-list {
+    gap: 32px;
+  }
+
+  .leadership-item {
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .leadership-section {
+    padding: 60px 6%;
+  }
+
+  .leadership-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: -0.02em;
+    color: #000000;
+  }
+
+  .lead-role {
+    font-size: 0.95rem;
+  }
+
+  .lead-org,
+  .lead-responsibility {
+    font-size: 0.9rem;
+  }
+}

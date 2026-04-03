@@ -54,10 +54,8 @@ function Achievements() {
     });
   };
 
-  // Get visible achievements
   const visibleAchievements = achievements.slice(currentIndex, currentIndex + VISIBLE_COUNT);
 
-  // Handle loading state
   if (loading) {
     return (
       <section className="achievements-section" id="achievements">
@@ -72,7 +70,6 @@ function Achievements() {
     );
   }
 
-  // Handle error state
   if (error || achievements.length === 0) {
     return (
       <section className="achievements-section" id="achievements">
@@ -167,7 +164,6 @@ function Achievements() {
           </button>
         </div>
 
-        {/* Dots Indicator */}
         <div className="carousel-dots">
           {Array.from({ length: Math.ceil(achievements.length / VISIBLE_COUNT) }).map((_, index) => (
             <button

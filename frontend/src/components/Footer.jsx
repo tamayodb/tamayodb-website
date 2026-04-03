@@ -6,13 +6,13 @@ function Footer() {
 
       <div className="footer-container">
 
-        <p>© 2026 Danyssa Tamayo. All rights reserved.</p>
-
-        <div className="footer-links">
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
-          <a href="#">Email</a>
+        <div className="logo">
+          <a href="#hero">
+            <img src="/logo-name-2.png" alt="tamayodb" />
+          </a>
         </div>
+
+        <p>© 2026 Danyssa Tamayo. All rights reserved.</p>
 
       </div>
 

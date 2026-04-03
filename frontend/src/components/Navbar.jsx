@@ -1,9 +1,33 @@
 import { useState } from "react";
-import { Download } from "lucide-react"; // ✅ Import Download icon
+import { Download } from "lucide-react"; 
 import "../styles/Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleDownload = (e) => {
+    e.preventDefault();
+    
+    fetch("/resume.pdf")
+      .then((res) => {
+        if (!res.ok) throw new Error("Resume not found");
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "CV_Danyssa_Tamayo.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => {
+        console.error("Download failed:", err);
+        alert("Could not download resume. Please check the file path.");
+      });
+  };
 
   return (
     <nav className="navbar">
@@ -25,17 +49,17 @@ function Navbar() {
         </ul>
 
         <div className="resume-container">
-          <a 
-            href="/resume.pdf"  
+     
+          <button 
+            type="button"
+            onClick={handleDownload} 
             className="resume-btn"
-            download="Danyssa_Tamayo_Resume.pdf"
           >
             Resume
             <Download className="resume-icon" /> 
-          </a>
+          </button>
         </div>
 
-        {/* Mobile Toggle */}
         <div
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}

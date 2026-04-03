@@ -1,0 +1,135 @@
+.contact-section {
+  background: #ffffff;
+  padding: 50px 6%;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;  
+  gap: 60px;
+}
+
+.contact-content {
+  flex: 1.5;
+}
+
+.contact-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.stroke-text {
+  font-weight: 800;
+  color: #2793ff;
+  text-decoration: underline;
+  text-decoration-color: #2793ff; 
+  text-decoration-thickness: 4px;
+  text-underline-offset: 4px;  
+}
+
+.contact-subtext {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.6;
+  max-width: 550px;
+}
+
+
+.contact-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.btn-contact {
+  padding: 16px 32px;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.icon-box span {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.icon-box:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .contact-title {
+    font-size: 2.5rem;
+  }
+
+  .contact-actions {
+    width: 100%;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 60px 6%;
+  }
+
+  .contact-title {
+    font-size: 2rem;
+  }
+  
+  .social-icons {
+    gap: 12px;
+  }
+  
+  .icon-box {
+    width: 44px;
+    height: 44px;
+  }
+}

@@ -3,11 +3,11 @@ import "../styles/Experience.css";
 const experiences = [
   {
     id: 1,
-    title: "Web and UI/UX Development Intern",
-    company: "Department of Science and Technology - Advanced Science and Technology Institute",
-    logo: "/asti.png",
-    period: "June 2025 - July 2025",
-    description: "Developed and presented a comprehensive project methodology that integrated UI/UX design principles, web development processes, and machine learning techniques compliant with ISO standards to support innovative research initiatives within the Research and Development Division.",
+    title: "Software Quality Assurance Intern",
+    company: "SM Retail, Inc. - Information Technology Services Division",
+    logo: "/sm.svg",
+    period: "March 2026 - Present",
+    description: "Currently undergoing internship, contributing to software testing, bug tracking, and quality assurance processes to ensure reliable and high-performing retail systems.",
   },
   {
     id: 2,
@@ -16,6 +16,14 @@ const experiences = [
     logo: "/tinker.png",
     period: "June 2025 - Present",
     description: "Established the center's digital presence from the ground up and engineered custom Google Apps Script solutions to automate financial tracking and scheduling.",
+  },
+    {
+    id: 3,
+    title: "Web and UI/UX Development Intern",
+    company: "Department of Science and Technology - Advanced Science and Technology Institute",
+    logo: "/asti.png",
+    period: "June 2025 - July 2025",
+    description: "Developed and presented a comprehensive project methodology that integrated UI/UX design principles, web development processes, and machine learning techniques compliant with ISO standards to support innovative research initiatives within the Research and Development Division.",
   },
 ];
 

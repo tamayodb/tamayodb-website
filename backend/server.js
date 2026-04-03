@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const certificationRoutes = require('./routes/certifications'); 
 const achievementRoutes = require('./routes/achievements');
+const leadershipRoutes = require('./routes/leadership');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/certifications', certificationRoutes);
 app.use('/api/achievements', achievementRoutes);
+app.use('/api/leadership', leadershipRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;

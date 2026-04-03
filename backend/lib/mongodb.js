@@ -1,34 +1,25 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  throw new Error('Define MONGO_URI environment variable in backend/.env');
-}
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+let cachedConnection = null;
 
 async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
+  if (cachedConnection) {
+    return cachedConnection;
   }
 
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGO_URI, opts).then((mongoose) => {
-      return mongoose;
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-  }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
+    cachedConnection = conn;
+    console.log('MongoDB Connected:', conn.connection.host);
+    return conn;
+  } catch (error) {
+    console.error('MongoDB Connection Error:', error);
+    throw error;
+  }
 }
 
 module.exports = dbConnect;
