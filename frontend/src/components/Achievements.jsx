@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Award, Calendar, Loader2, ExternalLink } from "lucide-react";
 import "../styles/Achievements.css";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const VISIBLE_COUNT = 3; 
 
 function Achievements() {
@@ -10,55 +10,94 @@ function Achievements() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect(() => {
-    fetchAchievements();
-  }, []);
-
-  const fetchAchievements = async () => {
+  const fetchAchievements = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/achievements`);
+      setError(null);
+      
+      console.log(`Fetching from: ${API_BASE}/api/achievements`);
+      
+      const response = await fetch(`${API_BASE}/api/achievements`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store' 
+      });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
       }
       
       const data = await response.json();
+      console.log("API Response:", data);
 
-      if (data.success && Array.isArray(data.achievements)) {
-        setAchievements(data.achievements);
-        setError(null);
+      const items = data?.achievements || data?.data || [];
+      
+      if (Array.isArray(items)) {
+        setAchievements(items);
       } else {
-        throw new Error("Invalid data structure from API");
+        throw new Error("Invalid data structure: expected array");
       }
+      
     } catch (err) {
       console.error("Fetch error:", err);
-      setError("Failed to load achievements. Please try again later.");
+      setError(err.message || "Failed to load achievements");
+      
+      if (err.message.includes('Failed to fetch') && !window._retryAttempted) {
+        window._retryAttempted = true;
+        console.log("Retrying once...");
+        setTimeout(fetchAchievements, 1000);
+        return;
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [fetchAchievements]);
 
   const nextAchievements = () => {
+    if (isAnimating || achievements.length <= VISIBLE_COUNT) return;
+    
+    setIsAnimating(true);
     setCurrentIndex((prev) => {
       const nextIndex = prev + VISIBLE_COUNT;
       return nextIndex >= achievements.length ? 0 : nextIndex;
     });
+    setTimeout(() => setIsAnimating(false), 300); 
   };
 
   const prevAchievements = () => {
+    if (isAnimating || achievements.length <= VISIBLE_COUNT) return;
+    
+    setIsAnimating(true);
     setCurrentIndex((prev) => {
       const prevIndex = prev - VISIBLE_COUNT;
       return prevIndex < 0 ? Math.max(0, achievements.length - VISIBLE_COUNT) : prevIndex;
     });
+    setTimeout(() => setIsAnimating(false), 300);
   };
 
-  const visibleAchievements = achievements.slice(currentIndex, currentIndex + VISIBLE_COUNT);
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') nextAchievements();
+      if (e.key === 'ArrowLeft') prevAchievements();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [achievements.length, isAnimating]);
 
-  if (loading) {
+  const visibleAchievements = achievements.slice(currentIndex, currentIndex + VISIBLE_COUNT);
+  const totalPages = Math.ceil(achievements.length / VISIBLE_COUNT);
+  const currentPage = Math.floor(currentIndex / VISIBLE_COUNT) + 1;
+
+  if (loading && achievements.length === 0) {
     return (
-      <section className="achievements-section" id="achievements">
+      <section className="achievements-section" id="achievements" aria-busy="true">
         <div className="achievements-container">
           <h2 className="achievements-title">Achievements</h2>
           <div className="loading-state">
@@ -76,7 +115,7 @@ function Achievements() {
         <div className="achievements-container">
           <h2 className="achievements-title">Achievements</h2>
           <div className="error-state">
-            <p>{error || "No achievements to display"}</p>
+            <p>{error || "No achievements to display yet"}</p>
             <button onClick={fetchAchievements} className="retry-btn">
               Try Again
             </button>

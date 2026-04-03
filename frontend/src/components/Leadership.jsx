@@ -7,26 +7,26 @@ const Leadership = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const response = await fetch('/api/leadership');
+        const response = await fetch(`${API_BASE}/api/leadership`);
         const data = await response.json();
         
         if (data.success) {
           setExperiences(data.experiences);
-        } else {
-          setError('Failed to load leadership experiences');
         }
-      } catch (err) {
-        setError(err.message);
+      } catch (error) {
+        console.error('Failed to fetch leadership data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchExperiences();
-  }, []);
+  }, [API_BASE]);
 
   if (loading) {
     return (

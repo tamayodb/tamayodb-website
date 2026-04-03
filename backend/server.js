@@ -10,12 +10,28 @@ const leadershipRoutes = require('./routes/leadership');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+   
+    const allowed = [
+      'http://localhost:5173',           // Vite dev
+      'http://localhost:3000',           // CRA dev
+      'https://tamayodb-website-frontend.vercel.app/', // Vercel frontend
+      process.env.FRONTEND_URL           
+    ].filter(Boolean); 
+    
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn('CORS blocked:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running!' });
-});
 
 app.use('/api/certifications', certificationRoutes);
 app.use('/api/achievements', achievementRoutes);
@@ -28,9 +44,9 @@ mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log('MongoDB connected');
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
+    app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
   })
   .catch((err) => {
     console.error('MongoDB connection failed:', err.message);

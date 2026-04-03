@@ -1,102 +1,106 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ExternalLink, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import "../styles/Certifications.css";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const INITIAL_VISIBLE_COUNT = 10; 
 
 function Certifications() {
   const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAll, setShowAll] = useState(false); 
+  const [showAll, setShowAll] = useState(false);
 
-  useEffect(() => {
-    fetchCertifications();
-  }, []);
-
-  const fetchCertifications = async () => {
+  const fetchCertifications = useCallback(async () => {
     try {
       setLoading(true);
-      console.log("Fetching from:", `${API_URL}/api/certifications`);
+      setError(null);
       
-      const response = await fetch(`${API_URL}/api/certifications`);
+      console.log(`Fetching from: ${API_BASE}/api/certifications`);
+      
+      const response = await fetch(`${API_BASE}/api/certifications`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      
+        cache: 'no-store'
+      });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
       }
       
       const data = await response.json();
       console.log("API Response:", data);
 
-      if (data.success && Array.isArray(data.data)) {
-        setCertifications(data.data);
-        setError(null);
-      } else if (data.success && Array.isArray(data.certifications)) {
-        setCertifications(data.certifications);
-        setError(null);
+      const items = data?.data || data?.certifications || [];
+      
+      if (Array.isArray(items)) {
+        setCertifications(items);
       } else {
-        throw new Error("Invalid data structure from API");
+        throw new Error("Invalid data structure: expected array");
       }
+      
     } catch (err) {
       console.error("Fetch error:", err);
-      setError("Failed to load certifications. Please try again later.");
+      setError(err.message || "Failed to load certifications");
+      
+      if (err.message.includes('Failed to fetch') && !window._retryAttempted) {
+        window._retryAttempted = true;
+        console.log("Retrying once...");
+        setTimeout(fetchCertifications, 1000);
+        return;
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, []); 
+
+  useEffect(() => {
+    fetchCertifications();
+  }, [fetchCertifications]);
 
   const toggleShowAll = () => {
-    setShowAll(!showAll);
+    setShowAll(prev => !prev);
+    if (!showAll) {
     
-    document.getElementById('certifications')?.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
-    });
+      setTimeout(() => {
+        document.querySelector('.certifications-list')?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest' 
+        });
+      }, 100);
+    }
   };
 
   const visibleCertifications = showAll 
     ? certifications 
     : certifications.slice(0, INITIAL_VISIBLE_COUNT);
 
-  if (loading) {
+  if (loading && certifications.length === 0) {
     return (
-      <section className="certifications-section" id="certifications">
+      <section className="certifications-section">
         <div className="certifications-container">
           <h2 className="certifications-title">Certifications</h2>
           <div className="loading-state">
-            <Loader2 className="spinner" size={40} />
-            <span>Loading certifications...</span>
+            <Loader2 className="spinner" />
+            <p>Loading certifications...</p>
           </div>
         </div>
       </section>
     );
   }
 
-  if (error) {
-    return (
-      <section className="certifications-section" id="certifications">
-        <div className="certifications-container">
-          <h2 className="certifications-title">Certifications</h2>
-          <div className="error-state">
-            <p>{error}</p>
-            <button onClick={fetchCertifications} className="retry-btn">
-              Try Again
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
-  if (!Array.isArray(certifications)) {
-    console.error("certifications is not an array:", certifications);
+  if (error && certifications.length === 0) {
     return (
-      <section className="certifications-section" id="certifications">
+      <section className="certifications-section">
         <div className="certifications-container">
           <h2 className="certifications-title">Certifications</h2>
           <div className="error-state">
-            <p>Invalid data format</p>
+            <p> {error}</p>
             <button onClick={fetchCertifications} className="retry-btn">
               Try Again
             </button>
