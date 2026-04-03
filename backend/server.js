@@ -32,9 +32,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-
-app.options('*', cors());
-
 app.use(express.json());
 
 
@@ -72,7 +69,7 @@ mongoose.connect(MONGO_URI)
 
 
 app.use((err, req, res, next) => {
-  console.error('💥 Server error:', err);
+  console.error('Server error:', err);
   res.status(500).json({ 
     success: false, 
     error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message 
