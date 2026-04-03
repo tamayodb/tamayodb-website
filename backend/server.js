@@ -16,7 +16,7 @@ app.use(cors({
     const allowed = [
       'http://localhost:5173',           // Vite dev
       'http://localhost:3000',           // CRA dev
-      'https://tamayodb-website-frontend.vercel.app/', // Vercel frontend
+      'https://tamayodb-website-frontend-o71fhu0o7.vercel.app', // Vercel frontend
       process.env.FRONTEND_URL           
     ].filter(Boolean); 
     
